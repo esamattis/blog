@@ -12,6 +12,7 @@ group :development do
   gem 'rubypants'
   gem 'rb-fsevent'
   gem 'stringex'
+  gem 'coffee-script'
 end
 
 gem 'sinatra', '1.2.6'
