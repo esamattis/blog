@@ -4,9 +4,8 @@ title: "Projects"
 sharing: false
 ---
 
-Here's some of the projects I am heavily involved with which have some
-importance. Most of these and other projects you can find from my [Github
-profile](https://github.com/epeli).
+Here's some of the projects I am heavily involved with. Most of these and some
+other projects you can find from my [Github profile](https://github.com/epeli).
 
 
 ## sauna.reload

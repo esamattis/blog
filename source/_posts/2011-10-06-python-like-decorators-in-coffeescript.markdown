@@ -12,8 +12,10 @@ categories:
 
 
 If you are not familar what decorators are in Python you should skim through
-[this](http://wiki.python.org/moin/PythonDecorators). In short they are a nice
-syntax for wrapping functions/methods with other functions in Python.
+[this](http://docs.python.org/glossary.html#term-decorator) and
+[this](http://www.ibm.com/developerworks/linux/library/l-cpdecor/index.html).
+In short they are a nice syntax for wrapping functions/methods with other
+functions in Python.
 
 I really like decorators in Python and I sometimes miss them when working in
 other languages. Today at work it hit me when I was working on CoffeeScript
@@ -49,7 +51,7 @@ cleanly with it.
 ``` python Stacking decorators in Python
 class Device(object):
     @roof(50)
-    @floor(10) # Checks to bottom of the value
+    @floor(10) # Checks the bottom of the value
     def get_value(self):
         return random.randint(0, 100)
 ```
@@ -66,19 +68,20 @@ class Device
 ```
 
 But wait! There were no specific decorator syntax in Python in the old days.
-One could apply decorators just by calling it to the target.
+One could apply decorators just by calling it to the target and replacing the
+original method.
 
 
 ``` python Oldschool decorator usage
 class Device(object):
-  def get_value(self):
-      return random.randint(0, 100)
+    def get_value(self):
+        return random.randint(0, 100)
 
-get_value = roof(50)(get_value)
-get_value = floor(10)(get_value)
+    get_value = roof(50)(get_value)
+    get_value = floor(10)(get_value)
 ```
 
-So you can use this in CoffeeScript
+So you can do this in CoffeeScript
 
 ``` coffeescript Piping decorators in CoffeeScript
 class Device
@@ -90,7 +93,7 @@ class Device
 
 ```
 
-Pretty ugly yeah, but might be better if you have tons of decorators.
+Pretty ugly, yeah, but might be better if you have tons of decorators.
 
 
 
