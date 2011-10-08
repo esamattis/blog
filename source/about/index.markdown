@@ -4,6 +4,8 @@ title: "About me"
 sharing: false
 ---
 
+<img src="http://www.gravatar.com/avatar/6398d275920f612b87785f8854abfc4a.png" alt="me" />
+
 I'm a web developer living in Jyväskylä, Finland. Currently I'm working for
 [Opinsys Oy][]. I love creating awesome web applications and I'm usually
 hacking with Node.js, CoffeeScript and probably soon with Ruby.
