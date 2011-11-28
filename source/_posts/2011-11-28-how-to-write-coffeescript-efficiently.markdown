@@ -69,7 +69,7 @@ compile the file when exception occurs. Not so fun.
 
 
 When you execute the `CoffeeCompile` Vim command in Command Mode you will get
-the whole file compiled into the scracth buffer. In that you can scroll the
+the whole file compiled into the scratch buffer. In that you can scroll the
 line referred by the stack trace and see what code exactly rose it.  This is
 bit clumsy since normally you can jump to a certain line by typing `:<number>`.
 We can do better! Put this to `.vimrc`:
