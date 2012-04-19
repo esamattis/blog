@@ -28,7 +28,7 @@ Usage goes like this :
   1. Create a tmux pane and start your REPL in it
   2. Select some code and hit the keyboard shortcut (you must configure this)
 
-Slimux now prompts the pane for you:
+Slimux now prompts the pane from you:
 
 <img src="/images/slimux/configure.png" alt="Configuring Slimux" />
 
@@ -38,12 +38,11 @@ Here you list of all your tmux panes. The syntax is read like this
 [session name].[window index].[pane index]
 ```
 
-Here's an ascii.io screencast of [Slimux in use](http://ascii.io/a/409).
-
 Slimux will then remember that selection and won't ask it again unless you
 explicitly want to reconfigure it. After that Slimux sends the code to the REPL
 and executes it.
 
+Here's an ascii.io screencast of [Slimux in use](http://ascii.io/a/409).
 
 For detailed command and install instructions refer to project README on
 Github:
@@ -77,12 +76,12 @@ Another issue is that Vimux doesn't have hooks to preprocess code by its type
 before sending it to REPL. For example you have to the remove extra line breaks
 from Python code to make it work with its REPL.
 
+But do read their [introductory blog post](https://www.braintreepayments.com/braintrust/vimux-simple-vim-and-tmux-integration). Good stuff anyways.
+
 Also I just kinda wanted learn some Vim Scripting and this is my first proper
-Vim plugin I've written. Feedback is really apriciated.
-
-
-
+Vim plugin I've written. Feedback is really appreciated.
 
 
 [tmux]: http://tmux.sourceforge.net/
 [Vimux]: https://github.com/benmills/vimux
+
