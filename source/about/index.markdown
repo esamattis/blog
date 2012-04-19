@@ -7,8 +7,7 @@ sharing: false
 <img src="http://www.gravatar.com/avatar/6398d275920f612b87785f8854abfc4a.png" alt="me" />
 
 I'm a web developer living in Jyväskylä, Finland. Currently I'm working for
-[Opinsys Oy][]. I love creating awesome web applications and I'm usually
-hacking with Node.js, CoffeeScript and probably soon with Ruby.
+[Opinsys Oy][].
 
 ## A Blog?
 
@@ -21,9 +20,10 @@ languages and related stuff.
 ## Contact
 
   * **Email:** esa-matti ät suuronen dot org
-  * **IRC:** Epeli @ IRCnet/Freenode
   * **Twitter:** [EsaMatti](https://twitter.com/#!/EsaMatti)
+  * **[Linkedin](http://fi.linkedin.com/in/esamatti)**
   * **Github:** [epeli](https://github.com/epeli)
+  * **IRC:** Epeli @ IRCnet/Freenode
 
 
 [Opinsys Oy]: http://www.opinsys.fi/en/
