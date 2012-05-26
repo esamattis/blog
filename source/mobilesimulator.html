@@ -1,0 +1,16 @@
+<!doctype html>
+<input id=slider type=range />
+<span id=value></span>
+<br>
+<iframe src=/  height=600 width=300></iframe>
+
+<script type="text/javascript" src=http://code.jquery.com/jquery-1.7.2.min.js></script>
+<script type="text/javascript">
+var iframe = $("iframe");
+var value = $("span");
+$("#slider").on("change", function(e) {
+    var width = this.value * 6;
+    iframe.prop("width", width);
+    value.text(width);
+});
+</script>
