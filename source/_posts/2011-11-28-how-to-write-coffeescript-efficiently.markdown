@@ -15,6 +15,8 @@ These tricks are for Vim, but the ideas can be carried out to other editors as
 well. I know that at least the TextMate CoffeeScript Bundle can do some of
 these.
 
+<!--more-->
+
 ## Basics
 
 Let's get the basics out of way. Get syntax hilighting from

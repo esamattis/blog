@@ -10,6 +10,12 @@ categories:
  - programming
 ---
 
+I really like decorators in Python and I sometimes miss them when working in
+other languages. Today at work it hit me when I was working on a CoffeeScript
+project. It is really easy to implement Python-like decorators cleanly in
+CoffeeScript.
+
+<!--more-->
 
 If you are not familar what decorators are in Python you should skim through
 [this](http://docs.python.org/glossary.html#term-decorator) and
@@ -17,10 +23,6 @@ If you are not familar what decorators are in Python you should skim through
 In short they are a nice syntax for wrapping functions/methods with other
 functions in Python.
 
-I really like decorators in Python and I sometimes miss them when working in
-other languages. Today at work it hit me when I was working on CoffeeScript
-project. It is really easy to implement Python-like decorators cleanly in
-CoffeeScript.
 
 ## Decorators in Python
 

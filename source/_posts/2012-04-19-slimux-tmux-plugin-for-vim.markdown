@@ -10,6 +10,8 @@ Lately I've gotten really in to [tmux][] and I've been looking for ways to
 integrate it to my Vim work flow. As result I ended up creating this Vim
 plugin.
 
+<!--more-->
+
 If you are unfamiliar with tmux, it's best described as alternative to GNU
 screen or Tiling Window Manger for console application. For fast start I can
 recommend a book from [The Pragmatic Bookshelf - tmux: Productive Mouse-Free Development](http://pragprog.com/book/bhtmux/tmux)
