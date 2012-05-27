@@ -6,7 +6,7 @@ url: http://esa-matti.suuronen.org/
 title: Esa-Matti Suuronen
 subtitle: I make web gadgets
 author: Esa-Matti Suuronen
-simple_search: http://google.com/search
+simple_search:
 description:
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
