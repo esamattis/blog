@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rendering Backbone Views without rendering"
+title: "Rendering Javascript Templates Without Rendering"
 date: 2012-05-28 22:56
 comments: true
 categories:
@@ -28,8 +28,8 @@ It gives a simple semantic data binding API which makes it easy to do similar
 transformations to DOM as you would do with regular templating languages like
 collection rendering, but without actually rendering any strings to DOM
 elements or cluttering them with some micro programming language. Transparency
-templates are just HTML and nothing more. The logic stays in the Javascript
-code.
+templates are just DOM elements filled with data and nothing more. The logic
+stays in the Javascript code.
 
 
 ## Using with Backbone.js
