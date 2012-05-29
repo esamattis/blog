@@ -120,7 +120,7 @@ can be an advantage in some situations. For example you could do some
 additional manipulation with jQuery to it which is not lost between render
 calls. But if you need to reset it you can just reclone the base element again.
 
-Here's a fully working [fiddle](http://jsfiddle.net/DBq9v/1/) of this example
+Here's a fully working [fiddle](http://jsfiddle.net/DBq9v/3/) of this example
 for you to play with.
 
 This sounds very promising to me and I'm going to try it in some project when I
