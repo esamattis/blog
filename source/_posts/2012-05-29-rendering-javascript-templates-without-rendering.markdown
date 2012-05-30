@@ -9,11 +9,11 @@ categories:
  - backbone
 ---
 
-For a long client-side templating languages has somewhat bothered me. Since
-they all take strings as input and re-renders those to DOM elements on every
-small change you want to make. That has always sounded bit silly to me.  Why
-not just create the DOM tree once and then just manipulate the bits you want to
-be changed?
+For a long time client-side templating languages has somewhat bothered me.
+Since they all take strings as input and re-renders those to DOM elements on
+every small change you want to make. That has always sounded bit silly to me.
+Why not just create the DOM tree once and then just manipulate the bits you
+want to be changed?
 
 <!--more-->
 
@@ -114,9 +114,9 @@ $(document).mousemove(function(e){
 });
 ```
 
-With Transparency there is one feature or gotha you must be aware of. The state
-of the `view.el` element is not completely reseted between render calls. This
-can be an advantage in some situations. For example you could do some
+With Transparency there is one feature or gotcha you must be aware of. The
+state of the `view.el` element is not completely reset between render calls.
+This can be an advantage in some situations. For example you could do some
 additional manipulation with jQuery to it which is not lost between render
 calls. But if you need to reset it you can just reclone the base element again.
 
