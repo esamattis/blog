@@ -23,6 +23,14 @@ body > nav {
   }
 }
 
+.categories {
+  a.category {
+    text-decoration: none;
+  }
+  a.category:hover {
+    text-decoration: underline;
+  }
+}
 
 body > header {
   font-size: 1em;
