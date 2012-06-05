@@ -47,6 +47,17 @@ body > header {
   }
 
 }
+
+::-moz-selection {
+  background: gray;
+  color: white;
+}
+::selection {
+  background: gray;
+  color: white;
+}
+
+
 @media only screen and (max-width: 380px) {
   body > header {
     hgroup {
