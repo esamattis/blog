@@ -77,3 +77,25 @@ body > header {
   }
 }
 
+
+
+.about-me-link {
+  float: right;
+  display: none;
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .arrow {
+    font-size: 130%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .about-me-link {
+    display: block;
+  }
+}
+
