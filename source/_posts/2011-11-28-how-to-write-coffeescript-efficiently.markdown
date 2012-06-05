@@ -6,6 +6,7 @@ comments: true
 categories:
  - coffeescript
  - programming
+ - vim
 ---
 
 I have found few tricks that makes writing CoffeeScript more efficient and fun,

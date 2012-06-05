@@ -6,7 +6,7 @@ comments: true
 categories:
  - programming
  - javascript
- - backbone
+ - backbone.js
 ---
 
 For a long time client-side templating languages has somewhat bothered me.

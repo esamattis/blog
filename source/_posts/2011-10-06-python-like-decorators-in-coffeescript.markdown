@@ -6,7 +6,6 @@ comments: true
 categories:
  - python
  - coffeescript
- - javascript
  - programming
 ---
 

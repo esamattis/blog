@@ -3,7 +3,9 @@ layout: post
 title: "Slimux - tmux Plugin for Vim"
 date: 2012-04-19 19:21
 comments: true
-categories: vim
+categories:
+ - vim
+ - tmux
 ---
 
 Lately I've gotten really in to [tmux][] and I've been looking for ways to
