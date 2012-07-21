@@ -12,6 +12,26 @@ body > nav {
   padding-right: 5px;
 }
 
+
+article {
+
+  h1, h1 a {
+    font-size: 25pt;
+  }
+
+  h2 {
+    font-size: 20pt;
+    // Remove top border
+    background: none;
+  }
+
+  header {
+    // Remove bottom border
+    background: none;
+  }
+
+}
+
 .sidebar {
   .aside-link {
     font-size: 8pt;
