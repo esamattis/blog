@@ -81,16 +81,12 @@ body > header {
 
 
 .about-me-link {
-  float: right;
+  position: absolute;
+  top: 170px;
+  margin-left: 32px;
   display: none;
   a {
     text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  .arrow {
-    font-size: 130%;
   }
 }
 
