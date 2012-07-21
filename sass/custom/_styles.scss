@@ -13,13 +13,12 @@ body > nav {
 }
 
 .sidebar {
-  .archives {
+  .aside-link {
     font-size: 8pt;
-    a {
+    text-decoration: none;
+    &:hover {
       text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
+      color: black;
     }
   }
 }
@@ -29,7 +28,8 @@ body > nav {
     text-decoration: none;
   }
   a.category:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    color: black;
   }
 }
 
