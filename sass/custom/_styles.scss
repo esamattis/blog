@@ -124,3 +124,20 @@ aside.sidebar,
   }
 }
 
+
+#content .blog-index footer {
+  margin-top: 0em;
+  a[rel=full-article] {
+    padding: 0em;
+    background: transparent;
+    &:hover {
+      color: black;
+      background: transparent;
+    }
+  }
+}
+
+
+.entry-title a:hover {
+  text-decoration: none;
+}
