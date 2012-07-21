@@ -85,25 +85,29 @@ body > header {
       padding-top: 135px;
       h1,h2 {
         margin-left: 10px;
-        margin-top: 10px;
+        margin-top: 30px;
       }
     }
   }
-}
 
-
-@media only screen and (min-width: 992px) {
-  #content .blog-index article h1, h1 {
-    font-size: 1.8em;
+  article {
+    h1, h2 {
+      line-height: 1em;
+      color: red;
+    }
   }
+
 }
+
+
 
 
 
 .about-me-link {
   position: absolute;
-  top: 170px;
+  top: 160px;
   margin-left: 32px;
+  margin-bottom: 30px;
   display: none;
   a {
     text-decoration: none;
@@ -116,6 +120,8 @@ body > header {
     display: block;
   }
 }
+
+
 
 footer .credit {
   color: gray;
