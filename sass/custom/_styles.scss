@@ -100,3 +100,19 @@ footer .credit {
   color: gray;
   font-size: small;
 }
+
+
+.rss-link {
+  backgroud-image: url(/images/rss.png);
+  float: left;
+  margin-left: 5px;
+  a {
+    color: transparent !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .rss-link {
+    display: none;
+  }
+}
+
