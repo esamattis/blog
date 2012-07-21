@@ -141,3 +141,11 @@ aside.sidebar,
 .entry-title a:hover {
   text-decoration: none;
 }
+
+#tweets a[href*="twitter.com/search"]:hover {
+  text-decoration: none;
+}
+
+#recent_posts .post a {
+  text-decoration: none;
+}
