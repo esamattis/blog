@@ -143,19 +143,6 @@ aside.sidebar,
 }
 
 
-.rss-link {
-  backgroud-image: url(/images/rss.png);
-  float: left;
-  margin-left: 5px;
-  a {
-    color: transparent !important;
-  }
-}
-@media only screen and (max-width: 768px) {
-  .rss-link {
-    display: none;
-  }
-}
 
 
 #content .blog-index footer {
@@ -181,4 +168,39 @@ aside.sidebar,
 
 #recent_posts .post a {
   text-decoration: none;
+}
+
+
+
+
+
+.subscribe-links {
+  margin-bottom: 0px;
+
+
+  div {
+    float: left;
+    background-repeat: no-repeat;
+    background-position: left top;
+  }
+
+  .rss-link {
+    background-image: url(/images/rss.png);
+    float: left;
+    margin-left: 5px;
+    a, a:hover {
+      color: transparent !important;
+    }
+  }
+
+  .twitter-link {
+    background-image: url(/images/bird_32_gray.png);
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  .rss-link {
+    display: none;
+  }
 }
