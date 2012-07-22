@@ -45,6 +45,9 @@ article {
 }
 
 .categories {
+  &:before {
+    content: "\2022 ";
+  }
   a.category {
     text-decoration: none;
   }
