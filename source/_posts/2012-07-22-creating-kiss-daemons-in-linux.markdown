@@ -27,7 +27,7 @@ When starting a process on boot there are usually few requirements I need
   1. And finally daemonize the process
 
 
-These all are fairly trivial tasks the implement in the actual application, but
+These all are fairly trivial tasks to implement in the actual application, but
 also these are the same for every app. I like to keep things DRY. When I'm
 creating for example some simple prototype application in Node.js I really
 don't care to think about which logging framework to use or how to do a double
