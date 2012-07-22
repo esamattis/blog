@@ -150,7 +150,7 @@ module Jekyll
             idx_raw = title_to_idx(title)
             idx ||= '#' + idx_raw
 
-            raise "Parsing Fail" unless @result.sub!(matched, "<h#{level} id=\"#{idx_raw}\">#{index} #{title}</h#{level}>")
+            raise "Parsing Fail" unless @result.sub!(matched, "<h#{level} id=\"#{idx_raw}\">#{title}<a class=\"anchor\" href=\"##{ idx_raw }\"></a></h#{level}>")
 
             key = {
               :title => title,
@@ -172,12 +172,7 @@ module Jekyll
     end
 
     def title_to_idx(title)
-      #idx = title=~/[^\u0000-\u007F]/ ? ("id-"+Digest::MD5.hexdigest(title.strip)) : title.strip
-      #idx = idx.parameterize.sub(/^\d+/, '')
-      puts "BLANK ID: please put an explicit ID for section #{title}, as in h5(#my-id)" if title.strip == ""
-      idx = ("id-"+Digest::MD5.hexdigest(title.strip))
-      
-      idx
+     title.downcase.gsub(/ /, "-").gsub(/[^a-z0-9\-]/, "")
     end
     
     def gen_list
