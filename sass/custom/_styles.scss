@@ -177,6 +177,10 @@ aside.sidebar,
 
 .subscribe-links {
   margin-bottom: 0px;
+  a, a:hover {
+    color: transparent !important;
+    text-decoration: none;
+  }
 
 
   div {
@@ -189,9 +193,6 @@ aside.sidebar,
     background-image: url(/images/rss.png);
     float: left;
     margin-left: 5px;
-    a, a:hover {
-      color: transparent !important;
-    }
   }
 
   .twitter-link {
