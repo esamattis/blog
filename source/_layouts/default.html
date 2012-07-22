@@ -4,7 +4,7 @@
   <header role="banner">{% include header.html %}</header>
   <div id="main">
     <div id="content">
-      {{ content | expand_urls: root_url }}
+      {{ content | expand_urls: root_url | indexer }}
     </div>
   </div>
   <footer role="contentinfo">{% include footer.html %}</footer>
