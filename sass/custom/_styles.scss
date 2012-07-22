@@ -208,21 +208,27 @@ aside.sidebar,
 
 
 article {
+
+  h1:hover, h2:hover, h3:hover {
+    .anchor {
+      // visibility: visible;
+      color: lighten($link-color, 30);
+    }
+  }
+
   .anchor {
-    visibility: hidden;
+    // visibility: hidden;
     margin-left: 5px;
     text-decoration: none;
+    color: white;
+    &:hover {
+      color: black !important;
+    }
     &:before {
       content: '\2693';
     }
   }
 
 
-  h1:hover, h2:hover, h3:hover {
-    .anchor {
-      visibility: visible;
-
-    }
-  }
 
 }
