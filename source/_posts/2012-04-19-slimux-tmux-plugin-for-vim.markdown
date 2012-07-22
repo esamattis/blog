@@ -61,7 +61,7 @@ Yes, there are quite a few tmux plugins for Vim already and this plugin got
 started pretty much by accident. I started by fixing
 [some](https://github.com/jpalardy/vim-slime/pull/14)
 [bugs](https://github.com/jpalardy/vim-slime/pull/13) from
-[vim-slime](https://github.com/jpalardy/vim-slime/pull/14). One thing I wanted
+[vim-slime](https://github.com/jpalardy/vim-slime). One thing I wanted
 for it was an interactive prompt for tmux pane selection. Typing the target
 pane manually is kinda pain. I started working on that feature on a empty
 plugin and soon I realized that it was actually easier to grab features from
