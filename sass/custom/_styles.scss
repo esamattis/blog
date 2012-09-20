@@ -58,12 +58,25 @@ article {
 }
 
 .logo {
-  background-image: url(/images/logo.png);
-  background-repeat: no-repeat;
-  height: 135px;
-  width: 135px;
-  position: absolute;
+  .cloud {
+    background-image: url(/images/logo-cloud.png);
+    background-repeat: no-repeat;
+    height: 40px;
+    width: 135px;
+  }
+  .mario {
+    background-image: url(/images/logo-mario.png);
+    background-repeat: no-repeat;
+    height: 50px;
+    width: 65px;
+    top: 100px;
+    left: 87px;
+    z-index: 100;
+  }
 
+  .cloud, .mario {
+    position: absolute;
+  }
 }
 
 body > header {
@@ -250,7 +263,10 @@ article {
 
 
 
-
+// Force transparent bg every where
+* {
+  background-color: transparent !important;
+}
 
 
 
