@@ -57,14 +57,22 @@ article {
   }
 }
 
+.logo {
+  background-image: url(/images/logo.png);
+  background-repeat: no-repeat;
+  height: 135px;
+  width: 135px;
+  position: absolute;
+
+}
+
 body > header {
   font-size: 1em;
   padding-bottom: 0em;
+  margin-top: 1em;
+  border-radius: 26px;
 
   hgroup {
-    background-image: url(/images/logo.png);
-    background-repeat: no-repeat;
-    height: 135px;
     padding-top: 15px;
     h1,h2 {
       margin-left: 170px;
@@ -75,11 +83,11 @@ body > header {
 
 ::-moz-selection {
   background: black;
-  color: white;
+  color: transparent;
 }
 ::selection {
   background: black;
-  color: white;
+  color: transparent;
 }
 
 
@@ -224,7 +232,7 @@ article {
     // visibility: hidden;
     margin-left: 5px;
     text-decoration: none;
-    color: white;
+    color: transparent;
     &:hover {
       color: black !important;
     }
