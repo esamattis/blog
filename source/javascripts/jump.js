@@ -25,12 +25,12 @@ window.onload = function() {
 
     mario.style.top = top + "px";
     mario.style.left = left + "px";
+    mario.style.visibility = "visible";
     mario.title = "Jump!";
 
   }
 
   function initAnimation(){
-    console.log("anim");
     var value = rotate.shift();
     if (typeof value !== "number") return;
 
@@ -45,7 +45,8 @@ window.onload = function() {
 
   function drop(){
 
-    if (top > 2000) {
+    if (top > window.innerHeight+5000) {
+      mario.style.visibility = "hidden";
       setTimeout(init, 5000);
       return;
     }
@@ -64,6 +65,7 @@ window.onload = function() {
   setTimeout(function(){
     initAnimation();
     init();
+    console.log("ready set go!");
     mario.addEventListener("mouseout", drop , true);
     mario.addEventListener("touchstart", drop , true);
   }, 5000);
