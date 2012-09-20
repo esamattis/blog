@@ -19,13 +19,12 @@ window.onload = function() {
 
     top = startTop = 100;
     left = startLeft = 87;
-    velocityDown = 10;
+    velocityDown = 8;
     velocityRight = 3;
     acceleration = 1.02;
 
     mario.style.top = top + "px";
     mario.style.left = left + "px";
-    mario.style.cursor = "pointer";
     mario.title = "Jump!";
 
   }
@@ -45,7 +44,6 @@ window.onload = function() {
 
 
   function drop(){
-    mario.style.cursor = "default";
 
     if (top > 2000) {
       setTimeout(init, 5000);
@@ -66,7 +64,8 @@ window.onload = function() {
   setTimeout(function(){
     initAnimation();
     init();
-    mario.addEventListener("mousedown", drop , true);
-  }, 2000);
+    mario.addEventListener("mouseout", drop , true);
+    mario.addEventListener("touchstart", drop , true);
+  }, 5000);
 };
 
