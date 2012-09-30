@@ -25,7 +25,7 @@ window.onload = function() {
 
     mario.style.top = top + "px";
     mario.style.left = left + "px";
-    mario.style.visibility = "visible";
+    mario.style.display = "block";
     mario.title = "Jump!";
 
   }
@@ -45,8 +45,8 @@ window.onload = function() {
 
   function drop(){
 
-    if (top > window.innerHeight+5000) {
-      mario.style.visibility = "hidden";
+    if (top > window.innerHeight+200) {
+      mario.style.display = "none";
       setTimeout(init, 5000);
       return;
     }
