@@ -56,6 +56,11 @@ default `log` and `info` writes to stdout and `warn` and `error` to stderr, but
 this causes some pains when redirecting logs to a single file. Log order might
 be messed up depending on IO buffering etc.
 
+Of course keep in mind that this might break your unix style app which uses
+stdout to communicate outside if you depend on `console.log()` being the print
+statement of Node.js. Rather use `process.stdout.write()`. It is more explicit
+and gives you more control.
+
 ## Background
 
 The main idea behind this module is to keep the original API of
