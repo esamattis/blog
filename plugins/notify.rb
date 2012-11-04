@@ -20,6 +20,9 @@ module Jekyll
       start = Time.now
       orig_process
       puts "Generation done. Took #{ Time.now - start } seconds".colorize( :green )
+      File.open "public/generated", "w" do |f|
+        f.write(Time.now.to_s)
+      end
     end
 
   end
