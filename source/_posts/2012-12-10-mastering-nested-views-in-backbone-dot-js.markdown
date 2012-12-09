@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mastering nested views in Backbone.js"
-date: 2012-12-03 22:25
+date: 2012-12-10 00:10
 comments: true
 categories:
   - Backbone.js
