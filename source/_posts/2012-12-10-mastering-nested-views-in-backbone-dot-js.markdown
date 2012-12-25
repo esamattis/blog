@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mastering nested views in Backbone.js"
-date: 2012-12-10 00:10
+date: 2012-12-10 22:25
 comments: true
 categories:
   - Backbone.js
@@ -38,9 +38,9 @@ here's Backbone.ViewMaster:
 
 <http://epeli.github.com/backbone.viewmaster/>
 
-It just a single Backbone.js View which can be used as the base view when
+It is just a single Backbone.js View which can be used as the base view when
 building Backbone.js apps. It tries to be more than just a library as it
-encourages on writing decoupled reusable views. Read the tutorial to get gist
-of it.
+encourages on writing decoupled and reusable views. Read the tutorial to get
+gist of it.
 
 
