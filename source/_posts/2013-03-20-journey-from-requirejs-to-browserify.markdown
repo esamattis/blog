@@ -7,6 +7,8 @@ categories:
   - web
   - node.js
   - browserify
+  - requirejs
+  - amd
 ---
 
 Lately I have been very frustrated with [RequireJS][]. I have a feeling that I
@@ -41,13 +43,13 @@ Another pain point has been the [require-handlebars-plugin][]. It's really
 complex to configure to work properly with the r.js builds. It requires forked
 versions of Handlebars, Underscore and json2 libraries. It also forces you to
 include some i18n solution which collided with ours. Not fun. I just wanted to
-use Handlebars with precomplication... So I grabbed the issue by the balls I
+use Handlebars with precompilation. So I grabbed the issue by the balls I
 wrote my own Handlebars plugin for RequireJS.
 
 <https://github.com/epeli/requirejs-hbs>
 
-It's a lot simpler and works. I though it doesn't swap out the Handlebars
-dependency for a runtime only version on builds. Pull requests welcome.
+It's a lot simpler and works. Though it doesn't swap out the Handlebars
+dependency for the runtime only version on builds. Pull requests welcome.
 
 ## Enter Browserify V2
 
@@ -59,7 +61,7 @@ arrays with the function arguments list. `var mod = require("module");` is just
 so nice in comparison. Also I haven't gotten any real benefits of the
 asynchronous part of AMD. So I'm very open to replace it with simpler
 synchronous requires. And now with the new version 2 of Browserify by substack
-iet seems to more simpler than ever to use them in the browsers too.
+it seems to more simpler than ever to use them in the browsers too.
 
 So I made a list of features I require to consider it as a proper RequireJS
 replacement.
@@ -106,11 +108,13 @@ about an hour later had it working:
 
 <https://github.com/epeli/node-hbsfy>
 
-It does use the runtime only build of Handlebars in the final bundle. When
-compared to RequireJS plugin API this was a really nice experience. A lot less
-confusing: No need to figure out how to do ajax in development, file system
-reading during build build or how to work with custom APIs. Just the familiar
-node.js transform streams here.
+This one actually uses the runtime only build of Handlebars in the final
+bundle!
+
+When compared to RequireJS plugin API this was a really nice experience. A lot
+less confusing: No need to figure out how to do ajax in development, file
+system reading during build build or how to work with custom APIs. Just the
+familiar node.js transform streams here. I like it a lot.
 
 ### Using libraries with globals
 
