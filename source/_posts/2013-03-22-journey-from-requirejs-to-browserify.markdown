@@ -126,8 +126,9 @@ var $ = require("./jquery.shim");
 $.fn.myplugin = function() { ... };
 ```
 
-Also in a Flotr like case where you have a library expecting a global but you
-have it as a non global module you can just put the global back in the shim:
+Also in a Flotr like cases where you have a library expecting a global but you
+only have it as a non global module you can just put the global back in the
+shim:
 
 ```javascript flotr2.shim.js
 var bean = require("bean");
