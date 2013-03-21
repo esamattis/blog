@@ -24,7 +24,7 @@ started investigating [Browserify][] as an alternative. Here's what I found.
 First I want to little bit explain why RequireJS bugs me. The main reason is
 the mess with the [AMD][] define functions calls in various libraries. Some do them
 and some don't. That's usually ok because you can easily shim the libraries
-with RequireJS, but when you have dependencies between the third party
+with RequireJS but when you have dependencies between the third party
 libraries the shit starts hitting the fan.
 
 ### Flotr2 and weird define calls
@@ -49,7 +49,7 @@ use Handlebars with precompilation (In the end I ended up writing my own
 Handlebars [loader plugin][requirejs-hbs]).
 
 These are just few of the issues I've had with RequireJS. Not really anything
-blocking, but there is just always some annoyances especially with build the
+blocking but there is just always some annoyances especially with build the
 step and it doesn't help that it doesn't give proper error messages when some
 thing goes wrong.
 
@@ -58,19 +58,19 @@ thing goes wrong.
 {% img right /images/browserify/browserify-logo.png 300 %}
 
 I've always preferred the node.js style module syntax over the AMD style. It's
-simpler and easier to deal with because I don't have to match the dependencies
-arrays with the function arguments list. Also I haven't gotten any real
-benefits of the asynchronous part of AMD. So I'm very open to replace it with
-simpler synchronous requires. And now with the new version 2 of Browserify by
-substack it seems to more simpler than ever to use them in the browsers too.
+simpler and easier to deal with. Also I haven't gotten any real benefits of the
+asynchronous part of AMD. So I'm very open to replace it with simpler
+synchronous requires. And now with the new version 2 of Browserify by substack
+it seems to more simpler than ever to use them in the browsers too.
 
 So I made a list of features I require to consider it as a proper RequireJS
-replacement.
+replacement:
 
   - Debugging: I don't want to see just one big bundle in the browser
   - Using libraries with globals
   - CoffeeScript precompiling
   - Handlebars precompiling
+  - Multiple versions of the same dependency
 
 ### Debugging
 
@@ -83,8 +83,8 @@ Chrome with source maps enabled from developer tools and it shows the original
 files as there where separate files in the bundle.
 
 But currently this seems to work only with Chrome. In others you get just a
-huge bundle of Javascript. Source maps are coming to Firefox, but wouldn't put
-my hopes up too much up for IE...
+huge bundle of Javascript. Source maps are coming to Firefox but I wouldn't put
+my hopes up for IE...
 
 ### Using libraries with globals
 
@@ -138,9 +138,9 @@ module.export = window.Flotr;
 
 ### CoffeeScript precompiling
 
-I was surprised find out that substack himself had written a CoffeeScript
-plugin for Browserify called [coffeeify][] because he doesn't personally use
-CoffeeScript.
+Substack himself has written a CoffeeScript plugin for Browserify called
+[coffeeify][]. Since he isn't a CoffeeScript user he is looking for maintainers
+for the plugin. Nevertheless the plugin works surprisingly well.
 
 It is used by installing it locally to a project and calling `browserify` with
 a `--transfrom` flag:
@@ -148,7 +148,7 @@ a `--transfrom` flag:
     $ npm install coffeeify
     $ browserify --transform coffeeify --debug main.js > bundle.js
 
-It has a fun feature:
+By working surprisingly well I mean this fun little feature:
 
 {% img /images/browserify/sourcemaps.png %}
 
@@ -156,7 +156,7 @@ Source maps!
 
 ### Handlebars precompiling
 
-Well, here Browserify had nothing to offer out of the box, but I took it as an
+Well, here Browserify had nothing to offer out of the box but I took it as an
 opportunity to get my self familiar the Browserify transform plugin API and
 about an hour later had it working:
 
@@ -167,6 +167,41 @@ less confusing: No need to figure out how to do ajax in development, file
 system reading during build build or how to work with custom APIs. Just the
 familiar node.js transform streams here. I like it a lot.
 
+### Multiple versions of the same dependency
+
+As Browserify uses [npm][] as its package manager you should be aware how npm
+pulls in dependencies. If two modules have a same dependency but on a
+different versions it will download two copies of this dependency and those
+will be put into the Browserify bundle too! Luckily npm is smart enough to
+combine those dependencies if their [semver][] version strings are compatible.
+
+This means that if you use for example Underscore in you project root it must
+be compatible with every sub dependency of your dependencies to get only one
+copy of Underscore to your Browserify bundle. But I do think this is a nice
+feature because then you don't get into any trouble using libraries with
+conflicting dependencies. You only get few more bytes. It's just something to
+be aware.
+
+## Conclusion
+
+This journey is still on going but I think will try using Browserify in my next
+project or convert old one from RequireJS.
+
+To conclude here a list of pros and cons.
+
+### Pros
+
+  - Always bundling
+    - No running into build problems later on
+  - Simpler syntax: `module.exports = ...` FTW!
+
+### Cons
+
+  - Always bundling
+    - Debugging old browsers is not getting any easier
+
+
+## Next
 
 
 [RequireJS]: http://requirejs.org/
@@ -176,3 +211,5 @@ familiar node.js transform streams here. I like it a lot.
 [UMD]: https://github.com/umdjs/umd
 [require-handlebars-plugin]: https://github.com/SlexAxton/require-handlebars-plugin
 [coffeeify]: https://github.com/substack/coffeeify
+[npm]: https://npmjs.org/
+[semver]: https://npmjs.org/package/semver

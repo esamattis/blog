@@ -1,0 +1,9 @@
+module.exports = {
+
+  path: "public",
+  match: [
+    /public\/generated/,
+    /public\/.+\.(css)/
+  ]
+
+};
