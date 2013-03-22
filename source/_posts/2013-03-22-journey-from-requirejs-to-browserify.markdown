@@ -81,7 +81,7 @@ Well this one was easy. Just build the bundle with `--debug` flag
 
 and Browserify will inline source maps into the bundle and then just fire up
 Chrome with source maps enabled from developer tools and it will display the
-original files as there where separate files in the bundle.
+original files as they where separate files.
 
 But currently this seems to work only with Chrome. In others you get just a
 huge bundle of Javascript. Source maps are coming to Firefox but I wouldn't put
