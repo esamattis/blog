@@ -38,6 +38,7 @@ Ok, but the Bean library itself has an [UMD][] style AMD definition which means
 that when it detects an AMD define function it uses it and skips the creation
 of the global which results in broken Flotr2. It really bums me out to fork
 libraries and remove AMD defines to make them work with AMD!
+<sup>[update!](#update1)</sup>
 
 ### Handlebars plugin and the build step
 
@@ -228,6 +229,12 @@ use the CommonJS syntax but I have no idea whether they can be used from
 Browserify.
 
 Drop a comment if you know anything about these. Thanks!
+
+<span id="update1">
+**Update**: It
+[appears](https://twitter.com/lmjabreu/status/315009976064155648) you can
+restore the global from RequireJS too.
+</span>
 
 [RequireJS]: http://requirejs.org/
 [Browserify]: https://github.com/substack/node-browserify
