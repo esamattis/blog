@@ -210,10 +210,10 @@ Browserify.
   - Must use a watcher tool for the builds. RequireJS can work purely in the
     browser
   - Some people might not want browser only libraries to npm. I'm not sure
-    what's the node.js/npm authors' stand on
-    this <sup>[update!](#update1)</sup>, but nevertheless with browserify you
-    are not bound to npm. Nothing should not prevent you from using CommonJS
-    modules from [Bower][] for example.
+    what's the node.js/npm authors' stand on this
+    <sup>[update!](#update1)</sup>, but nevertheless with browserify you are
+    not bound to npm. Nothing should prevent you from using CommonJS modules
+    from [Bower][] for example.
   - Documentation could be better. Lots of things are assumed that you know
     already from node.js. I hope this blog post helps a little bit.
   - No community other than the node.js community. I'd like to see a mailing
