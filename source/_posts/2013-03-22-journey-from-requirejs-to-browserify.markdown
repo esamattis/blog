@@ -38,7 +38,7 @@ Ok, but the Bean library itself has an [UMD][] style AMD definition which means
 that when it detects an AMD define function it uses it and skips the creation
 of the global which results in broken Flotr2. It really bums me out to fork
 libraries and remove AMD defines to make them work with AMD!
-<sup>[update!](#update1)</sup>
+<sup>[update!](#update2)</sup>
 
 ### Handlebars plugin and the build step
 
@@ -210,9 +210,10 @@ Browserify.
   - Must use a watcher tool for the builds. RequireJS can work purely in the
     browser
   - Some people might not want browser only libraries to npm. I'm not sure
-    what's the node.js/npm authors' stand on this, but nevertheless with
-    browserify you are not bound to npm. Nothing should not prevent you from
-    using CommonJS modules from [Bower][] for example.
+    what's the node.js/npm authors' stand on
+    this <sup>[update!](#update1)</sup>, but nevertheless with browserify you
+    are not bound to npm. Nothing should not prevent you from using CommonJS
+    modules from [Bower][] for example.
   - Documentation could be better. Lots of things are assumed that you know
     already from node.js. I hope this blog post helps a little bit.
   - No community other than the node.js community. I'd like to see a mailing
@@ -221,7 +222,7 @@ Browserify.
 ## Next
 
 There are still few thing I want to investigate. If browser only modules are
-ok(?) in npm: How can I use images and CSS from a npm module? CSS could done
+ok in npm: How can I use images and CSS from a npm module? CSS could done
 with a transform plugin and some runtime code which appends it to DOM, but how
 to get images from it especially if I'm not using node.js as my backend?
 
@@ -232,10 +233,15 @@ Browserify.
 Drop a comment if you know anything about these. Thanks!
 
 <span id="update1">
-**Update**: It
+**Update 1**: Browser only modules are ok in npm. See the comments.
+</span>
+
+<span id="update2">
+**Update 2**: It
 [appears](https://twitter.com/lmjabreu/status/315009976064155648) you can
 restore the global from RequireJS too.
 </span>
+
 
 [RequireJS]: http://requirejs.org/
 [Browserify]: https://github.com/substack/node-browserify
