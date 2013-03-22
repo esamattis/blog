@@ -199,6 +199,7 @@ Browserify.
   - Can use cool things from node.js.
   - Simpler syntax: `module.exports = ...` FTW!
   - npm at your disposal.
+  - Sharing modules with node.js is no brainer
   - Source maps for CoffeeScript. Thou RequireJS will probably get those
     [soon][require-cs-issue] too.
   - The plugin API is awesome.
