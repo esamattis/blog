@@ -127,9 +127,9 @@ var $ = require("./jquery.shim");
 $.fn.myplugin = function() { ... };
 ```
 
-Also in a Flotr like cases where you have a library expecting a global but you
-only have it as a non global module you can just put the global back in the
-shim:
+Also in a Flotr like cases <sup>[note](#note1)</sup> where you have a library
+expecting a global but you only have it as a non global module you can just put
+the global back in the shim:
 
 ```javascript flotr2.shim.js
 var bean = require("bean");
@@ -231,6 +231,12 @@ use the CommonJS syntax but I have no idea whether they can be used from
 Browserify.
 
 Drop a comment if you know anything about these. Thanks!
+
+<span id="note1">
+**Note**: In reality the Flotr2 distribution is unusable in Browserify too
+because it contains multiple CommonJS exports in a single file which is
+inherently incompatible with the CommonJS specification to start with.
+</span>
 
 <span id="update1">
 **Update 1**: Browser only modules are ok in npm. See the comments.

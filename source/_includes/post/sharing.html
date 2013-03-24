@@ -9,8 +9,19 @@
     <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
   {% endif %}
   {% if site.reddit_vote %}
-  <span style="top: 4px; position: relative;">
+  <span style="top: 3px; position: relative; margin-right: 30px">
       <script type="text/javascript" src="http://www.reddit.com/static/button/button1.js"></script>
     </span>
+  {% endif %}
+  {% if site.hn_vote %}
+    <a href="http://news.ycombinator.com/submit" class="hn-share-button">Vote on HN</a>
+    <script>
+        (function(d, t) {
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = '//hnbutton.appspot.com/static/hn.min.js';
+            s.parentNode.insertBefore(g, s);
+        }(document, 'script'));
+    </script>
   {% endif %}
 </div>

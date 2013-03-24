@@ -76,6 +76,7 @@ twitter_follow_button: false
 twitter_show_follower_count: false
 twitter_tweet_button: true
 reddit_vote: true
+hn_vote: true
 
 # Google +1
 google_plus_one: false
