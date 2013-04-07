@@ -165,6 +165,17 @@ else {
 And in app code just use `var $ = require("./jquery-or-zepto");` to get the
 correct one depending on the bundle we loaded.
 
+## Putting it all together
+
+I've uploaded a more real worldish example on [github pages][carcounter] using
+the techniques presented here. It will also serve as a decent Backbone.js and
+Handlebars example with Browserify.  It's heavily commented so it should be
+easy to follow even if you don't know/care anything about Backbone or
+Handlebars.
+
+Open up devtools from your browser and look at the network tab to see how
+bundles are loaded. Sources are also available on [Github][carcounter-src].
+
 
 
 
