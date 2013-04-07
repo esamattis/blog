@@ -3,6 +3,7 @@ layout: post
 title: "Asynchronous module loading with Browserify"
 date: 2013-03-25 01:46
 comments: true
+published: false
 categories:
   - web
   - node.js
@@ -12,117 +13,164 @@ categories:
 This is a sequel for the [Journey From RequireJS to Browserify][] post.
 
 After publishing the previous post I got a lot of feedback saying that
-Browserify can't do asynchronous module loading. While it's true that
-Browserify doesn't do it for you it doesn't mean that you cannot do
-asynchronous module loading **with** Browserify. This is very intentional
-decision in Browserify. It is supposed to be just a simple tool for bundling
-CommonJS/node.js modules for the browser and nothing more. There are other
-tools which can be used with Browserify to implement asynchronous module
-loading.
-
+Browserify can't do asynchronous module loading. Since that's something I'd
+like to have with Browserify too I started looking on how to do it and after
+couple of [pull][pr1] [requests][pr2] and one published npm
+[module][browserify-externalize] later I happy to say it's very much possible!
 
 <!-- more -->
-
-This is pretty common misconception or even attitude with other unopinionated
-tools also. When I tell people that I'm using [Backbone][] for my frontend apps
-they often ask how can I use it because it doesn't do data binding, nested
-views or something else which is available in some huge framework they are
-using. But this is a feature! And so it is with Browserify too. It doesn't mean
-that I can't do [those][rivetsjs] [things][viewmaster] with Backbone.
-
 
 Lets go through some use cases for asynchronous module loading.
 
 ## Loading shims for old browsers
 
-todo
+This is a simple use case and it has almost nothing to do with Browserify.  For
+example you are using `Array.prototype.forEach` in your app and you want to
+load [es5-shim][] if the browser is missing the implementation:
 
-## Lazy loading rarely used parts of the app
+```javascript entry.js
 
-Like admin tools which are not available for the casual user.
+function start(){
+  var main = require("./main");
+  main();
+}
 
-todo
+if (Array.prototype.forEach) {
+  // Just require the main function and execute
+  // it if the browser has forEach implementation
+  start();
+}
+else {
+  // If not load the es5-shim with jQuery and
+  // execute main after it has loaded
+  $.getScript("./vendor/es5-shim.js", start);
+}
+```
+
+## Lazy loading rarely used parts
+
+Lets say your app has some graph view which requires a large graphing library
+and you want to load that library and related code lazily only when the user
+actually uses the feature like this:
+
+```javascript main.js
+$("button.display-graph").on("click", function(){
+  $.getScript("bundle/graph.js", function(){
+    var GraphView = require("./graph-view");
+    var gv = new GraphView();
+    gv.render();
+    $(".graph-container").html(gv.el);
+  });
+});
+```
+
+To do this you have to remove the `./graph-view` and its dependencies from the
+main app bundle. Here's where my module, [browserify-externalize][], comes to
+play. You create a second Browserify bundle which is a subset of the main
+bundle and use the `externalize` function to remove code from the main:
+
+```javascript build.js
+var fs = require("fs");
+var browserify = require("browserify");
+var externalize = require("browserify-externalize");
+
+// Main bundle has main.js as the entry point
+var main = browserify("./main");
+
+// Graph bundle does not have an entry point, but it has
+// `./graph-view` as requireable module
+var graph = browserify().require("./graph-view");
+
+// Use externalize to remove graph bundle code from the main
+externalize(main, graph, function(err){
+  if (err) throw err;
+  // After externalizing the bundles can be written to files
+  main.bundle().pipe(fs.createWriteStream("./bundle/main.js"));
+  graph.bundle().pipe(fs.createWriteStream("./bundle/graph.js"));
+});
+
+```
+
+Now just include `./bundle/main.js` to the page and `./bundle/graph.js` will
+be loaded lazily when needed.
 
 ### Conditional bundle loading
 
-I might have different builds for different browsers. For example a build with
-Zepto for clients implementing `document.querySelector` and a jQuery build for
-others.
+We might have different bundles for different browsers. For example a bundle
+with Zepto for clients implementing `document.querySelector` and a jQuery
+bundle for others.
 
-With this setup I need three different bundles:
+To do this we need to build simple lightweight entry point with a script loader
+and two versions of the main bundle. One with Zepto and one with jQuery.
 
-  - `bundle/index.js`
-  - `bundle/main-zepto.js`
-  - `bundle/main-jquery.js`
+```javascript build.js
 
-Where `bundle/index.js` is very lightweight file with only a script loader and
-logic to decide whether to use Zepto or jQuery. The main bundles
-`bundle/main-zepto.js` and `bundle/main-jquery.js` are copies of the full
-application with a difference being that other comes with Zepto and other
-with jQuery.
+var entry = browserify("./entry");
 
-`index.js`:
+var jquery = browserify("./main");
+var zepto = browserify("./main");
 
-```javascript
+// The main bundle has require calls to both jQuery and Zepto.
+// So remove Zepto from the jQuery bundle:
+jquery.external("./vendor/zepto");
+// and jQuery from the Zepto bundle:
+zepto.external("./vendor/jquery");
 
-// Load lightweight script loader
-var loadScript = require("./load_script");
-
-// If browser has querySelectorAll we can use just Zepto because Zepto builds
-// on top if
-var useZepto = !!document.querySelectorAll;
-
-// Using this we can decide which bundle to load.
-if (useZepto) loadScript("bundle/main-zepto.js", start);
-else loadScript("bundle/main-jquery.js", start);
-
-function start(err){
-  // Crash if bundle loading failed
+// Then we remove both main bundles from the entry
+// bundle to make it really lightweight
+externalize(entry, [jquery, zepto], function(err){
   if (err) throw err;
+  entry.bundle().pipe(fs.createWriteStream("./bundle/entry.js"));
+  zepto.bundle().pipe(fs.createWriteStream("./bundle/main-zepto.js"));
+  jquery.bundle().pipe(fs.createWriteStream("./bundle/main-jquery.js"));
+});
+```
 
-  // Now this is the important part. Using the useZepto we can detect in which
-  // bundle we are actually on. In zepto bundle we can only require Zepto and
-  // in jQuery bundle we can require only jQuery. In reality we would want to
-  // move this if-statement to a module where we can just do:
-  // var $ = require("./zepto_or_jquery");
-  if (useZepto) var $ = require("./zepto");
-  else var $ = require("./jquery");
+In entry.js we just detect which one we want to use and load it:
 
-  // Something Backbonenish that must be added to the dom
-  var MainView = require("./main");
-  var main = new MainView();
-  main.render()
-  $("body").html(main.el);
+```javascript entry.js
+// Since we don't have jQuery.getScript here we use an lightweight
+// alternative called $script.js
+var $script = require("scriptjs").$script;
 
+// We set a global flag indicating which one we are using.
+// We use this later to detect which one we can require.
+window.USE_ZEPTO = !!document.querySelectorAll;
+
+function start() {
+  var main = require("./main");
+  main();
 }
 
+if (window.USE_ZEPTO) $script("bundle/main-zepto.js", start);
+else $script("bundle/main-jquery.js", start);
 ```
 
-So how do we build these two different bundles?
+In our app code we need to abstract the require calls to jQuery and Zepto to
+make  it smooth:
 
-First we need to build index.js bundle with everything else factored out except
-`./load_script`.
-
+```javascript jquery-or-zepto.js
+// Neither one, jQuery or Zepto, does CommonJS exports
+// so grab them from the globals after requiring
+if (window.USE_ZEPTO) {
+  require("./vendor/zepto");
+  module.exports = window.Zepto;
+}
+else {
+  require("./vendor/jquery");
+  module.exports = window.jQuery;
+}
 ```
-browserify \
-  --external ./zeptop.js
-  --external ./jquery.js
-  --external ./main.js > bundle/index.js
-```
 
-Then we just build two different bundles of `main.js` with jQuery or Zepto left
-out:
-
-
-```
-browserify --require --external ./zeptop.js > bundle/main-jquery.js
-browserify --require --external ./jquery.js > bundle/main-zeptop.js
-```
+And in app code just use `var $ = require("./jquery-or-zepto");` to get the
+correct one depending on the bundle we loaded.
 
 
 
 
 [Journey From RequireJS to Browserify]: http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-requirejs-to-browserify/
-[Backbone]: http://backbonejs.org/
-[rivetsjs]: http://rivetsjs.com/
-[viewmaster]: http://epeli.github.com/backbone.viewmaster/
+[pr1]: https://github.com/substack/node-browserify/pull/360
+[pr2]: https://github.com/substack/browser-pack/pull/9
+[browserify-externalize]: https://npmjs.org/package/browserify-externalize
+[es5-shim]: https://github.com/kriskowal/es5-shim
+
