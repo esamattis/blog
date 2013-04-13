@@ -101,7 +101,7 @@ the library exposes itself explicitly to the `window` object. If it uses a
 `var` statement to declare the global then you get into trouble. In Browserify
 that global will be hidden inside the module closure. Also `this` seems to be
 bound to some internal dependency array of Browserify so libraries exposing
-global to it need some special handling too.
+global to it need some special handling too.  <sup>[update!](#update3)</sup>
 
 #### Shims
 
@@ -246,6 +246,10 @@ inherently incompatible with the CommonJS specification to start with.
 **Update 2**: It
 [appears](https://twitter.com/lmjabreu/status/315009976064155648) you can
 restore the global from RequireJS too.
+</span>
+
+<span id="update3">
+**Update 3**: `this` works like you would expect in node [now](https://github.com/substack/browser-pack/pull/11).
 </span>
 
 
