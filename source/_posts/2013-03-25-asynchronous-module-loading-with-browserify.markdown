@@ -23,7 +23,7 @@ couple of [pull][pr1] [requests][pr2] and one published npm
 ## Background
 
 Basically asynchronous module loading can be done just by creating multiple
-bundles with Browserify loading them with a script loader of your choosing.
+bundles with Browserify and loading them with a script loader of your choosing.
 There is one in [jQuery][getscript] or if you don't like jQuery there
 [are][$script.js] [quite][yepnope] [a][head.js] [few][lab.js]
 [standalone][lazyload] [ones][basket.js] [out][modern] there.
