@@ -16,85 +16,42 @@ After publishing the previous post I got a lot of feedback saying that
 Browserify can't do asynchronous module loading. Since that's something I'd
 like to have with Browserify too I started looking on how to do it and after
 couple of [pull][pr1] [requests][pr2] and one published npm
-[module][browserify-externalize] later I happy to say it's very much possible!
+[module][externalize] later I happy to say it's very much possible!
 
 <!-- more -->
 
-Lets go through some use cases for asynchronous module loading.
+## Background
+
+Basically asynchronous module loading can be done just by creating multiple
+bundles with Browserify loading them with a script loader of your choosing.
+There is one in [jQuery][getscript] or if you don't like jQuery there
+[are][$script.js] [quite][yepnope] [a][head.js] [few][lab.js]
+[standalone][lazyload] [ones][basket.js] out there.
+
 
 ## Loading shims for old browsers
 
-This is a simple use case and it has almost nothing to do with Browserify.  For
-example you are using `Array.prototype.forEach` in your app and you want to
+This is a simple use case and it has almost nothing to do with Browserify. For
+example if we are using `Function.prototype.bind` in our app and we want to
 load [es5-shim][] if the browser is missing the implementation:
 
-```javascript entry.js
+```javascript index.js
 
-function start(){
-  var main = require("./main");
-  main();
-}
-
-if (Array.prototype.forEach) {
-  // Just require the main function and execute
-  // it if the browser has forEach implementation
-  start();
+if (Function.prototype.bind) {
+  // Just require the main module if the browser
+  // has Function.prototype.bind implementation
+  require("./main");
 }
 else {
-  // If not load the es5-shim with jQuery and
-  // execute main after it has loaded
-  $.getScript("./vendor/es5-shim.js", start);
+  // If not load the es5-shim with a script loader and
+  // require main after it has loaded
+  jQuery.getScript("./vendor/es5-shim.js", function(){
+    require("./main");
+  });
 }
 ```
 
-## Lazy loading rarely used parts
-
-Lets say your app has some graph view which requires a large graphing library
-and you want to load that library and related code lazily only when the user
-actually uses the feature like this:
-
-```javascript main.js
-$("button.display-graph").on("click", function(){
-  $.getScript("bundle/graph.js", function(){
-    var GraphView = require("./graph-view");
-    var gv = new GraphView();
-    gv.render();
-    $(".graph-container").html(gv.el);
-  });
-});
-```
-
-To do this you have to remove the `./graph-view` and its dependencies from the
-main app bundle. Here's where my module, [browserify-externalize][], comes to
-play. You create a second Browserify bundle which is a subset of the main
-bundle and use the `externalize` function to remove code from the main:
-
-```javascript build.js
-var fs = require("fs");
-var browserify = require("browserify");
-var externalize = require("browserify-externalize");
-
-// Main bundle has main.js as the entry point
-var main = browserify("./main");
-
-// Graph bundle does not have an entry point, but it has
-// `./graph-view` as requireable module
-var graph = browserify().require("./graph-view");
-
-// Use externalize to remove graph bundle code from the main
-externalize(main, graph, function(err){
-  if (err) throw err;
-  // After externalizing the bundles can be written to files
-  main.bundle().pipe(fs.createWriteStream("./bundle/main.js"));
-  graph.bundle().pipe(fs.createWriteStream("./bundle/graph.js"));
-});
-
-```
-
-Now just include `./bundle/main.js` to the page and `./bundle/graph.js` will
-be loaded lazily when needed.
-
-### Conditional bundle loading
+## Conditional bundle loading
 
 We might have different bundles for different browsers. For example a bundle
 with Zepto for clients implementing `document.querySelector` and a jQuery
@@ -104,9 +61,9 @@ To do this we need to build simple lightweight entry point with a script loader
 and two versions of the main bundle. One with Zepto and one with jQuery.
 
 ```javascript build.js
+var browserify = require("browserify");
 
-var entry = browserify("./entry");
-
+var index = browserify("./index");
 var jquery = browserify("./main");
 var zepto = browserify("./main");
 
@@ -116,34 +73,27 @@ jquery.external("./vendor/zepto");
 // and jQuery from the Zepto bundle:
 zepto.external("./vendor/jquery");
 
-// Then we remove both main bundles from the entry
-// bundle to make it really lightweight
-externalize(entry, [jquery, zepto], function(err){
-  if (err) throw err;
-  entry.bundle().pipe(fs.createWriteStream("./bundle/entry.js"));
-  zepto.bundle().pipe(fs.createWriteStream("./bundle/main-zepto.js"));
-  jquery.bundle().pipe(fs.createWriteStream("./bundle/main-jquery.js"));
-});
+index.bundle().pipe(fs.createWriteStream("./bundle/index.js"));
+zepto.bundle().pipe(fs.createWriteStream("./bundle/main-zepto.js"));
+jquery.bundle().pipe(fs.createWriteStream("./bundle/main-jquery.js"));
 ```
 
-In entry.js we just detect which one we want to use and load it:
+In index.js we just detect which one we want to use and load it:
 
-```javascript entry.js
-// Since we don't have jQuery.getScript here we use an lightweight
-// alternative called $script.js
+```javascript index.js
+// Since we don't have jQuery.getScript here we use an
+// lightweight alternative called $script.js. npm: scriptjs
 var $script = require("scriptjs").$script;
 
 // We set a global flag indicating which one we are using.
 // We use this later to detect which one we can require.
 window.USE_ZEPTO = !!document.querySelectorAll;
 
-function start() {
-  var main = require("./main");
-  main();
-}
-
-if (window.USE_ZEPTO) $script("bundle/main-zepto.js", start);
-else $script("bundle/main-jquery.js", start);
+// The both main bundles have an entry points (main.js) so we
+// only need to load them and the code will be executed soon
+// as it is added to the DOM
+if (window.USE_ZEPTO) $script("bundle/main-zepto.js");
+else $script("bundle/main-jquery.js");
 ```
 
 In our app code we need to abstract the require calls to jQuery and Zepto to
@@ -165,6 +115,56 @@ else {
 And in app code just use `var $ = require("./jquery-or-zepto");` to get the
 correct one depending on the bundle we loaded.
 
+## Lazy loading rarely used parts
+
+Now this is where things get really interesting.
+
+Lets say our app has some graph view which requires a large graphing library
+and we want to load that library and related code lazily only when the user
+actually uses the feature like this:
+
+```javascript main.js
+$("button.display-graph").on("click", function(){
+  jQuery.getScript("bundle/graph.js", function(){
+    var GraphView = require("./graph-view");
+    var view = new GraphView();
+    view.render();
+    $(".graph-container").html(view.el);
+  });
+});
+```
+
+To do this we have to remove the `./graph-view` and its dependencies from the
+main bundle. Here's where my module, [externalize][], comes to help.
+We create a second Browserify bundle which is a subset of the main bundle and
+use the `externalize` function to remove code from the main:
+
+```javascript build.js
+var fs = require("fs");
+var browserify = require("browserify");
+var externalize = require("externalize");
+
+// Main bundle has main.js as the entry point
+var main = browserify("./main");
+
+// Graph bundle does not have an entry point, but it has
+// `./graph-view` as requireable module
+var graph = browserify().require("./graph-view");
+
+// Use externalize to remove graph bundle code from the main
+externalize(main, graph, function(err){
+  if (err) throw err;
+  // After externalizing the bundles can be written to files
+  main.bundle().pipe(fs.createWriteStream("./bundle/main.js"));
+  graph.bundle().pipe(fs.createWriteStream("./bundle/graph.js"));
+});
+
+```
+
+Now just include `./bundle/main.js` to the page and `./bundle/graph.js` will
+be loaded lazily when needed.
+
+
 ## Putting it all together
 
 I've uploaded a more real worldish example on [github pages][carcounter] using
@@ -173,15 +173,47 @@ Handlebars example with Browserify.  It's heavily commented so it should be
 easy to follow even if you don't know/care anything about Backbone or
 Handlebars.
 
-Open up devtools from your browser and look at the network tab to see how
-bundles are loaded. Sources are also available on [Github][carcounter-src].
+[{% img /images/carcounter.png %}][carcounter]
 
+Open up devtools from your browser and look at the network tab to see what
+happens when you hit to "Toggle graph" button for the first time.
 
+I also  encourage you to read the source in following order:
 
+  1. [build.js](https://github.com/epeli/carcounter/blob/master/build.js)
+    - Build script for the bundles
+  1. [index.js](https://github.com/epeli/carcounter/blob/master/client/index.js)
+    - This is the first thing executed on the page
+    - It determines whether to load jQuery or the Zepto version of the main bundle
+      and whether to load the shims
+  1. [main.js](https://github.com/epeli/carcounter/blob/master/client/main.js)
+    - The actual application code starts here
+    - It lazy loads the graph code on first time it is used
+  1. [Compiled bundles](https://github.com/epeli/carcounter/tree/master/bundle)
+    - Take a look at their sizes and skim through what they contain
+
+## Before diving in
+
+Before diving in and slicing up your Browserify bundles you should really sit
+down and think through whether this is really required for your app.  For
+example if you add a largish image to your app it might easily dissolve all the
+benefits you gained by slicing up your app. And because it can get very
+complex if you go crazy with it you should make sure it is worth it.
+
+Happy hacking!
 
 [Journey From RequireJS to Browserify]: http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-requirejs-to-browserify/
 [pr1]: https://github.com/substack/node-browserify/pull/360
 [pr2]: https://github.com/substack/browser-pack/pull/9
-[browserify-externalize]: https://npmjs.org/package/browserify-externalize
+[externalize]: https://npmjs.org/package/externalize
 [es5-shim]: https://github.com/kriskowal/es5-shim
+[carcounter]: http://epeli.github.io/carcounter/
+[carcounter-src]: https://github.com/epeli/carcounter
 
+[getscript]: http://api.jquery.com/jQuery.getScript/
+[$script.js]: https://npmjs.org/package/scriptjs
+[yepnope]: http://yepnopejs.com/
+[lab.js]: http://labjs.com/
+[lazyload]: https://github.com/rgrove/lazyload/
+[head.js]: http://headjs.com/
+[basket.js]: http://addyosmani.github.io/basket.js/
