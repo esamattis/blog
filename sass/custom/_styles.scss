@@ -261,7 +261,10 @@ article {
 
 }
 
-
+// Remove margin if list is inside of a numbered list
+ol ul {
+  margin-bottom: 0em;
+}
 
 // Force transparent bg every where
 * {
