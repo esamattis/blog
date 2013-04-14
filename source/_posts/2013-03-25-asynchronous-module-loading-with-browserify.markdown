@@ -16,7 +16,7 @@ After publishing the previous post I got a lot of feedback saying that
 Browserify can't do asynchronous module loading. Since that's something I'd
 like to have with Browserify too I started looking on how to do it and after
 couple of [pull][pr1] [requests][pr2] and one published npm
-[module][externalize] later I happy to say it's very much possible!
+[module][externalize] later I'm happy to say it's very much possible now!
 
 <!-- more -->
 
@@ -26,7 +26,7 @@ Basically asynchronous module loading can be done just by creating multiple
 bundles with Browserify loading them with a script loader of your choosing.
 There is one in [jQuery][getscript] or if you don't like jQuery there
 [are][$script.js] [quite][yepnope] [a][head.js] [few][lab.js]
-[standalone][lazyload] [ones][basket.js] out there.
+[standalone][lazyload] [ones][basket.js] [out][modern] there.
 
 
 ## Loading shims for old browsers
@@ -164,6 +164,7 @@ externalize(main, graph, function(err){
 Now just include `./bundle/main.js` to the page and `./bundle/graph.js` will
 be loaded lazily when needed.
 
+Checkout the externalize [readme][] file for more information.
 
 ## Putting it all together
 
@@ -178,7 +179,7 @@ Handlebars.
 Open up devtools from your browser and look at the network tab to see what
 happens when you hit to "Toggle graph" button for the first time.
 
-I also  encourage you to read the source in following order:
+I encourage you to read the source code of the example in following order:
 
   1. [build.js](https://github.com/epeli/carcounter/blob/master/build.js)
     - Build script for the bundles
@@ -192,12 +193,13 @@ I also  encourage you to read the source in following order:
   1. [Compiled bundles](https://github.com/epeli/carcounter/tree/master/bundle)
     - Take a look at their sizes and skim through what they contain
 
-## Before diving in
+## Before going crazy with it
 
-Before diving in and slicing up your Browserify bundles you should really sit
-down and think through whether this is really required for your app.  For
-example if you add a largish image to your app it might easily dissolve all the
-benefits you gained by slicing up your app. And because it can get very
+Before slicing up your Browserify bundles you should really sit down and think
+through whether this is really required for your app. For example if you add a
+largish image to your app it might easily dissolve all the benefits you gained
+by slicing the bundles. Even a single 100kb image will translate to a quite big
+chunk of minified and gzipped Javascript code. And because this can get very
 complex if you go crazy with it you should make sure it is worth it.
 
 Happy hacking!
@@ -209,6 +211,7 @@ Happy hacking!
 [es5-shim]: https://github.com/kriskowal/es5-shim
 [carcounter]: http://epeli.github.io/carcounter/
 [carcounter-src]: https://github.com/epeli/carcounter
+[readme]: https://github.com/epeli/browserify-externalize#readme
 
 [getscript]: http://api.jquery.com/jQuery.getScript/
 [$script.js]: https://npmjs.org/package/scriptjs
@@ -217,3 +220,5 @@ Happy hacking!
 [lazyload]: https://github.com/rgrove/lazyload/
 [head.js]: http://headjs.com/
 [basket.js]: http://addyosmani.github.io/basket.js/
+[modern]: https://gist.github.com/epeli/5384178
+
