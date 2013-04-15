@@ -1,9 +1,8 @@
 ---
 layout: post
 title: "Asynchronous module loading with Browserify"
-date: 2013-03-25 01:46
+date: 2013-04-15 10:00
 comments: true
-published: false
 categories:
   - web
   - node.js
