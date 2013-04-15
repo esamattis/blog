@@ -206,7 +206,7 @@ Happy hacking!
 [Journey From RequireJS to Browserify]: http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-requirejs-to-browserify/
 [pr1]: https://github.com/substack/node-browserify/pull/360
 [pr2]: https://github.com/substack/browser-pack/pull/9
-[externalize]: https://npmjs.org/package/externalize
+[externalize]: https://github.com/epeli/browserify-externalize
 [es5-shim]: https://github.com/kriskowal/es5-shim
 [carcounter]: http://epeli.github.io/carcounter/
 [carcounter-src]: https://github.com/epeli/carcounter
