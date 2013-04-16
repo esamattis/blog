@@ -52,9 +52,15 @@ else {
 
 ## Conditional bundle loading
 
-We might have different bundles for different browsers. For example a bundle
-with Zepto for clients implementing `document.querySelector` and a jQuery
-bundle for others.
+We might have different bundles for different browsers. Often on modern
+browsers we can rely on the native implementations and skip the Javascript
+shims or polyphills that are required for the older ones. We could for example
+inlude a custom lightweight [jQuery build][] to our "modern browser" bundle or
+go little extreme and use Zepto in place of jQuery for modern browsers like we
+do here.
+
+To detect modern enough browsers for Zepto we check for
+`document.querySelector` implementation.
 
 To do this we need to build simple lightweight entry point with a script loader
 and two versions of the main bundle. One with Zepto and one with jQuery.
@@ -211,6 +217,7 @@ Happy hacking!
 [carcounter]: http://epeli.github.io/carcounter/
 [carcounter-src]: https://github.com/epeli/carcounter
 [readme]: https://github.com/epeli/browserify-externalize#readme
+[jQuery build]: http://net.tutsplus.com/tutorials/javascript-ajax/how-to-build-your-own-custom-jquery/
 
 [getscript]: http://api.jquery.com/jQuery.getScript/
 [$script.js]: https://npmjs.org/package/scriptjs
